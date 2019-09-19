@@ -103,3 +103,45 @@
 	```
 	sw1# show vlan brief
 	```
+
+
+## Настройка Trunk
+
+1. Для начала настроим все нужные vlan 
+2. Чтобы указать, что данный интерфейс должен быть в режиме trunk:
+	```
+	sw1(config)# interface fa0/22
+	sw1(config-if)# switchport mode trunk
+	```
+3. Теперь мы должны разрешить те vlan, что могут передаваться через порт в режиме trunk:
+	```
+	sw1(config)# interface fa0/22
+	sw1(config-if)# switchport trunk allowed vlan 1-2,10,15
+	```
+4. Чтобы добавить ещё один разрешённый vlan:
+	```
+	sw1(config)# interface fa0/22
+	sw1(config-if)# switchport trunk allowed vlan add 160
+```
+5. Чтобы удалить vlan из списка разрешённых:
+	```
+	sw1(config)# interface fa0/22	 
+	sw1(config-if)# switchport trunk allowed vlan remove 160
+	```
+
+
+На некоторых моделях коммутаторов (на которых поддерживается ISL) после попытки перевести интерфейс в режим статического транка, может появится такая ошибка:
+
+	```
+	sw1(config-if)# switchport mode trunk
+	Command rejected: An interface whose trunk encapsulation is “Auto” can not be configured to “trunk” mode.
+	```
+
+Это происходит из-за того, что динамическое определение инкапсуляции (ISL или 802.1Q) работает только с динамическими режимами транка. И для того, чтобы настроить статический транк, необходимо инкапсуляцию также настроить статически.  
+Для таких коммутаторов необходимо явно указать тип инкапсуляции для интерфейса:
+	```
+	sw1(config-if)# switchport trunk encapsulation dot1q 
+	```
+
+И после этого снова повторить команду настройки статического транка (switchport mode trunk).
+
