@@ -128,8 +128,7 @@
 	sw1(config)# interface fa0/22	 
 	sw1(config-if)# switchport trunk allowed vlan remove 160
 	```
-
-
+  
 На некоторых моделях коммутаторов (на которых поддерживается ISL) после попытки перевести интерфейс в режим статического транка, может появится такая ошибка:
 
 	```
@@ -143,5 +142,16 @@
 	sw1(config-if)# switchport trunk encapsulation dot1q 
 	```
 
-И после этого снова повторить команду настройки статического транка (switchport mode trunk).
+И после этого снова повторить команду настройки статического транка (switchport mode trunk).  
+
+В стандарте 802.1Q существует понятие [native VLAN](http://xgu.ru/wiki/Native_VLAN). Трафик этого VLAN передается нетегированным. По умолчанию это VLAN 1. Однако можно изменить это и указать другой VLAN как native.  
+Настройка VLAN 5 как native:
+
+	```
+	sw1(config-if)# switchport trunk native vlan 5
+	```
+
+[Взято отсюда](http://xgu.ru/wiki/VLAN_%E2_Cisco)
+
+
 
