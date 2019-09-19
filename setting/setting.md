@@ -132,10 +132,10 @@
 
 На некоторых моделях коммутаторов (на которых поддерживается ISL) после попытки перевести интерфейс в режим статического транка, может появится такая ошибка:
 
-	```
-	sw1(config-if)# switchport mode trunk
-	Command rejected: An interface whose trunk encapsulation is “Auto” can not be configured to “trunk” mode.
-	```
+```
+sw1(config-if)# switchport mode trunk
+Command rejected: An interface whose trunk encapsulation is “Auto” can not be configured to “trunk” mode.
+```
 
 Это происходит из-за того, что динамическое определение инкапсуляции (ISL или 802.1Q) работает только с динамическими режимами транка. И для того, чтобы настроить статический транк, необходимо инкапсуляцию также настроить статически.  
 Для таких коммутаторов необходимо явно указать тип инкапсуляции для интерфейса:
@@ -148,9 +148,9 @@
 В стандарте 802.1Q существует понятие [native VLAN](http://xgu.ru/wiki/Native_VLAN). Трафик этого VLAN передается нетегированным. По умолчанию это VLAN 1. Однако можно изменить это и указать другой VLAN как native.  
 Настройка VLAN 5 как native:
 
-	```
-	sw1(config-if)# switchport trunk native vlan 5
-	```
+```
+sw1(config-if)# switchport trunk native vlan 5
+```
 
 [Взято отсюда](http://xgu.ru/wiki/VLAN_%E2_Cisco)
 
