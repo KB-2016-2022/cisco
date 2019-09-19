@@ -140,9 +140,9 @@ Command rejected: An interface whose trunk encapsulation is “Auto” can not b
 Это происходит из-за того, что динамическое определение инкапсуляции (ISL или 802.1Q) работает только с динамическими режимами транка. И для того, чтобы настроить статический транк, необходимо инкапсуляцию также настроить статически.  
 Для таких коммутаторов необходимо явно указать тип инкапсуляции для интерфейса:
 
-	```
-	sw1(config-if)# switchport trunk encapsulation dot1q 
-	```
+```
+sw1(config-if)# switchport trunk encapsulation dot1q 
+```
 
 И после этого снова повторить команду настройки статического транка (switchport mode trunk).  
 
