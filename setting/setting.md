@@ -56,7 +56,7 @@
 	```
 	nata-switch(config)#no ip domain-lookup
 	nata-switch(config)#line con 0
-	nata-switch(config)#logging sync
+	nata-switch(config-line)#logging sync
 	```
 
 ## VLAN в Cisco
