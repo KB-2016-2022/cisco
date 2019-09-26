@@ -155,5 +155,53 @@ sw1(config-if)# switchport trunk native vlan 5
 
 [Взято отсюда](http://xgu.ru/wiki/VLAN_%E2_Cisco)
 
+## Коммутатор третьего уровня
 
+Как отличить?  
+У коммутатора третьего уровня в верхнем правом углу четырёхзначное число начинается с цифры 3. Например `Cisco Catalyst 3560`  
 
+### Настройка для уровня ядра (Core)
+
+1. Настраиваем интерфейс для выхода в Интернет. В нашем случае это loopback
+
+	```
+	Switch(config)#interface loopback 1
+	Switch(config-if)#ip address X.X.X.X Y.Y.Y.Y
+	```
+
+2. Настраиваем интерфейс для внутренней сети (сети предприятия). В нашем случае это loopback
+
+	```
+	Switch(config)#interface loopback 2
+	Switch(config-if)#ip address X.X.X.X Y.Y.Y.Y
+	```
+
+3. Настраиваем интерфейс для коммутаторов уровня распределения
+
+	```
+	Switch(config)#interface fa0/1
+	Switch(config-if)#no switchport
+	Switch(config-if)#ip address X.X.X.X Y.Y.Y.Y
+	Switch(config-if)#exit
+	Switch(config)#interface fa0/2
+	Switch(config-if)#no switchport
+	Switch(config-if)#ip address X.X.X.X Y.Y.Y.Y
+	```
+
+4. Настроим статические маршрруты:
+
+	```
+	Switch(config)#ip route X.X.X.X Y.Y.Y.Y loopback 2
+	```
+
+5. Настроим RIP:
+
+	```
+	Switch(config)#ip routing
+	Switch(config)#router rip
+	Switch(config-router)#version 2
+	Switch(config-router)#no auto-summary
+	Switch(config-router)#network X.X.X.X
+	Switch(config-router)#network A.A.A.A
+	...
+	```
